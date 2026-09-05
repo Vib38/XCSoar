@@ -210,7 +210,14 @@ OrderedTask::RunDijsktraMin(const GeoPoint &location) noexcept
   const unsigned active_index = GetActiveIndex();
   dijkstra.SetTaskSize(task_size - active_index);
   for (unsigned i = active_index; i != task_size; ++i) {
-    const SearchPointVector &boundary = task_points[i]->GetSearchPoints();
+    const SearchPointVector &boundary = i == 0
+      /* the start point is still the active one: the aircraft has not
+         started yet and may still cross anywhere on the boundary,
+         just like StartPoint::find_best_start() assumes; the samples
+         inside the start sector are no constraint here */
+      ? task_points[i]->GetBoundaryPoints()
+      : task_points[i]->GetSearchPoints();
+
     dijkstra.SetBoundary(i - active_index, boundary);
   }
 
