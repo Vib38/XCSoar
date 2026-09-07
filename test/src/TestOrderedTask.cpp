@@ -511,11 +511,13 @@ TestTravelledDistance()
 
 /**
  * While the start point is still the active task point, the aircraft
- * has not started yet: the origin of the first leg is a point on the
- * start boundary where the start can still be crossed.  Two pieces of
- * code write that value (StartPoint::find_best_start() and the
- * minimum distance Dijkstra); both must search the boundary, so that
- * the origin can at worst step from one boundary node to the next.
+ * has not started yet: it must still leave through the boundary, so
+ * the samples it collects inside the sector constrain nothing.
+ *
+ * Two things follow, and this checks both.  The origin of the first
+ * leg stays on the boundary, moving by at most one of the nodes the
+ * boundary is sampled at.  The minimum remaining task distance stays
+ * put as the aircraft moves about inside the sector.
  */
 static void
 TestStartLegOrigin()
