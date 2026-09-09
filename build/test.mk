@@ -92,6 +92,7 @@ TEST_NAMES = \
 	TestRadixTree TestGeoBounds TestGeoClip \
 	TestLogger TestGRecord TestClimbAvCalc TestCirclingWind \
 	TestFilteredVarioComputer \
+	TestCourseDirector \
 	TestVarioSynthesiser TestAudioVario \
 	TestWaypointReader TestThermalBase \
 	TestFlarmNet TestFlarmMessaging \
@@ -669,6 +670,13 @@ TEST_FILTERED_VARIO_COMPUTER_SOURCES = \
 	$(TEST_SRC_DIR)/TestFilteredVarioComputer.cpp
 TEST_FILTERED_VARIO_COMPUTER_DEPENDS = LIBNMEA GEO MATH UTIL UNITS TIME
 $(eval $(call link-program,TestFilteredVarioComputer,TEST_FILTERED_VARIO_COMPUTER))
+
+TEST_COURSE_DIRECTOR_SOURCES = \
+	$(SRC)/CourseDirector/CourseDirectorComputer.cpp \
+	$(TEST_SRC_DIR)/tap.c \
+	$(TEST_SRC_DIR)/TestCourseDirector.cpp
+TEST_COURSE_DIRECTOR_DEPENDS = MATH UTIL
+$(eval $(call link-program,TestCourseDirector,TEST_COURSE_DIRECTOR))
 
 TEST_PROJECTION_SOURCES = \
 	$(SRC)/Projection/Projection.cpp \
