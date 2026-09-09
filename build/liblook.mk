@@ -21,6 +21,7 @@ LOOK_SOURCES := \
 	$(SRC)/Look/AirspaceLook.cpp \
 	$(SRC)/Look/TrailLook.cpp \
 	$(SRC)/Look/CrossSectionLook.cpp \
+	$(SRC)/Look/CourseDirectorLook.cpp \
 	$(SRC)/Look/GestureLook.cpp \
 	$(SRC)/Look/HorizonLook.cpp \
 	$(SRC)/Look/TaskLook.cpp \

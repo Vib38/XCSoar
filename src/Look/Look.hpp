@@ -12,6 +12,7 @@
 #include "TraceHistoryLook.hpp"
 #include "MapLook.hpp"
 #include "CrossSectionLook.hpp"
+#include "CourseDirectorLook.hpp"
 #include "HorizonLook.hpp"
 #include "TrafficLook.hpp"
 #include "FlarmTrafficLook.hpp"
@@ -36,6 +37,7 @@ struct Look {
   TraceHistoryLook trace_history;
   MapLook map;
   CrossSectionLook cross_section;
+  CourseDirectorLook course_director;
   HorizonLook horizon;
   TrafficLook traffic;
   FlarmTrafficLook flarm_gauge;
