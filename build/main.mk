@@ -234,6 +234,8 @@ XCSOAR_SOURCES := \
 	$(SRC)/DataFileLayout.cpp \
 	$(SRC)/DataLayoutMigration.cpp \
 	$(SRC)/HorizonWidget.cpp \
+	$(SRC)/CourseDirectorWidget.cpp \
+	$(SRC)/CourseDirector/CourseDirectorComputer.cpp \
 	$(SRC)/Renderer/TextRowRenderer.cpp \
 	$(SRC)/Renderer/TwoTextRowsRenderer.cpp \
 	$(SRC)/Renderer/HorizonRenderer.cpp \
