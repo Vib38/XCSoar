@@ -1207,6 +1207,7 @@ DEBUG_PROGRAM_NAMES += \
 	RunChartRenderer \
 	RunWindArrowRenderer \
 	RunHorizonRenderer \
+	RunCourseDirectorRenderer \
 	RunFinalGlideBarRenderer \
 	RunFAITriangleSectorRenderer \
 	RunFlightListRenderer \
@@ -2521,6 +2522,19 @@ RUN_HORIZON_RENDERER_SOURCES = \
 	$(TEST_SRC_DIR)/RunHorizonRenderer.cpp
 RUN_HORIZON_RENDERER_DEPENDS = FORM SCREEN EVENT RESOURCE ASYNC OS IO THREAD MATH UTIL
 $(eval $(call link-program,RunHorizonRenderer,RUN_HORIZON_RENDERER))
+
+RUN_COURSE_DIRECTOR_RENDERER_SOURCES = \
+	$(SRC)/Look/ButtonLook.cpp \
+	$(SRC)/Math/Screen.cpp \
+	$(MORE_SCREEN_SOURCES) \
+	$(SRC)/Look/CourseDirectorLook.cpp \
+	$(SRC)/CourseDirector/CourseDirectorComputer.cpp \
+	$(SRC)/Renderer/CourseDirectorRenderer.cpp \
+	$(TEST_SRC_DIR)/Fonts.cpp \
+	$(TEST_SRC_DIR)/FakeAsset.cpp \
+	$(TEST_SRC_DIR)/RunCourseDirectorRenderer.cpp
+RUN_COURSE_DIRECTOR_RENDERER_DEPENDS = FORM SCREEN EVENT RESOURCE ASYNC OS IO THREAD MATH UTIL
+$(eval $(call link-program,RunCourseDirectorRenderer,RUN_COURSE_DIRECTOR_RENDERER))
 
 RUN_FINAL_GLIDE_BAR_RENDERER_SOURCES = \
 	$(SRC)/Math/Screen.cpp \
