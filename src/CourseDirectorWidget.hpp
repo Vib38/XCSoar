@@ -12,6 +12,7 @@ class CourseDirectorWidget final : public WindowWidget,
 
 public:
   /* virtual methods from class Widget */
+  PixelSize GetMinimumSize() const noexcept override;
   void Prepare(ContainerWindow &parent, const PixelRect &rc) noexcept override;
   void Show(const PixelRect &rc) noexcept override;
   void Hide() noexcept override;

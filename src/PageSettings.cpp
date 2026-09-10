@@ -84,6 +84,10 @@ PageLayout::MakeTitle(const InfoBoxSettings &info_box_settings,
       builder.Append(", XS");
       break;
 
+    case Bottom::COURSE_DIRECTOR:
+      builder.Append(", CD");
+      break;
+
     case Bottom::WEATHER_CONTROLS:
       break;
 

@@ -8,6 +8,7 @@
 #include "NMEA/Derived.hpp"
 #include "NMEA/MoreData.hpp"
 #include "Renderer/CourseDirectorRenderer.hpp"
+#include "Screen/Layout.hpp"
 #include "UIGlobals.hpp"
 #include "time/DeltaTime.hpp"
 #include "ui/canvas/Canvas.hpp"
@@ -104,6 +105,15 @@ CourseDirectorWidget::Update(const MoreData &basic,
                              const DerivedInfo &calculated) noexcept
 {
   ((CourseDirectorWindow &)GetWindow()).ReadBlackboard(basic, calculated);
+}
+
+PixelSize
+CourseDirectorWidget::GetMinimumSize() const noexcept
+{
+  /* one control height: the band is a strip and not a chart, and
+     without a height of its own it would be given a third of the
+     screen like the cross section */
+  return {0u, Layout::GetMinimumControlHeight()};
 }
 
 void

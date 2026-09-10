@@ -418,6 +418,7 @@ PageLayoutEditWidget::Prepare([[maybe_unused]] ContainerWindow &parent, [[maybe_
   static constexpr StaticEnumChoice bottom_list[] = {
     { PageLayout::Bottom::NOTHING, N_("Nothing") },
     { PageLayout::Bottom::CROSS_SECTION, N_("Cross section") },
+    { PageLayout::Bottom::COURSE_DIRECTOR, N_("Course director") },
     /* Always available: RASP does not require OpenGL, and the shared
        weather cursor bar works for RASP on memory canvas / Kobo. */
     { PageLayout::Bottom::WEATHER_CONTROLS, NC_("Setting", "Weather controls") },

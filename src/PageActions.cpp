@@ -8,6 +8,7 @@
 #include "ActionInterface.hpp"
 #include "MainWindow.hpp"
 #include "util/ScopeExit.hxx"
+#include "CourseDirectorWidget.hpp"
 #include "CrossSection/CrossSectionWidget.hpp"
 #include "DataGlobals.hpp"
 #include "Dialogs/Weather/WeatherDialog.hpp"
@@ -553,6 +554,10 @@ LoadBottom(const PageLayout &layout)
 
   case PageLayout::Bottom::CROSS_SECTION:
     CommonInterface::main_window->SetBottomWidget(new CrossSectionWidget(*data_components));
+    break;
+
+  case PageLayout::Bottom::COURSE_DIRECTOR:
+    CommonInterface::main_window->SetBottomWidget(new CourseDirectorWidget());
     break;
 
   case PageLayout::Bottom::WEATHER_CONTROLS:

@@ -92,6 +92,11 @@ struct PageLayout
     WEATHER_CONTROLS,
 
     /**
+     * Show the course director band below the map.
+     */
+    COURSE_DIRECTOR,
+
+    /**
      * A custom #Widget is being displayed.  This is not a
      * user-accessible option, it's only used for runtime state.
      */
