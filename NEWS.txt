@@ -53,6 +53,10 @@ Version 7.46 - not yet released
     min-sink can lower GPS-only wind quality #2905
   - skip estimated TAS from ground speed and wind when GPS track is
     missing
+  - add the course director, an optional bottom area that reduces the
+    bearing to the next turn point and the wind to one left/right
+    deviation which is flown to zero; enable it per page in
+    Config -> System -> Pages -> Bottom area
 * devices
   - fix the map ground track line following heading instead of ground
     track with Condor 3 UDP in a crosswind #2900

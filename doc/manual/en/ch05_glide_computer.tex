@@ -677,6 +677,42 @@ For the case where the final waypoint is active and one is above final
 glide, circling is not necessary so this simple scheme is optimal.
 
 
+\section{Course director}\label{sec:course-director}
+
+The course director reduces the bearing to the next turn point and the
+wind to a single left/right deviation, shown as a horizontal band
+below the map.  A fixed index marks the centre of the scale, and a bar
+moves across it: fly towards the bar until it sits on the index.  The
+scale reaches full deflection at 30 degrees of error, and the bar
+changes colour once the aircraft is on course.
+
+Unlike the optimal cruise track described above, the director commands
+a heading and not a track, and it has a null point.  The pilot flies
+one bar to the centre instead of comparing two symbols on the map.
+
+Where the optimal cruise track answers `which track arrives soonest',
+the director answers `where should the nose be pointing now'.  The two
+therefore differ in flight, and deliberately so: the cruise track
+spreads the wind drift over the whole cruise and climb cycle and uses
+the MacCready speed, whereas the director uses the wind and the
+airspeed as they are at this moment.
+
+With a compass or an AHRS connected, the heading responds to the stick
+at once.  Without one, XCSoar reconstructs the heading from the ground
+track and the wind; the director then responds no faster than the
+track does, but it still centres in the right place.
+
+The band is empty whenever no command can be given: before take off,
+when no task is active, and when the crosswind exceeds the airspeed so
+that the course cannot be held at all.  The graduations remain, so
+that an empty band is not read as a command to fly straight ahead.
+
+The course director is off by default.  Enable it for a page through
+the page configuration (Section~\ref{conf:screenpages}): set
+\emph{Bottom area} to \emph{Course director}.  It occupies the same
+place as the cross section, so a page shows one or the other.
+
+
 \section{Auto MacCready}\label{sec:auto-maccready}
 
 XCSoar can adjust the MacCready ring setting automatically to relieve the
