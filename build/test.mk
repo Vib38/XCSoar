@@ -2,7 +2,6 @@ name-to-bin = $(patsubst %,$(TARGET_BIN_DIR)/%$(TARGET_EXEEXT),$(1))
 
 MORE_SCREEN_SOURCES = \
 	$(TEST_SRC_DIR)/FakeLogFile.cpp \
-	$(SRC)/Look/FontDescription.cpp \
 	$(SRC)/Screen/Layout.cpp \
 	$(SRC)/Hardware/DisplayDPI.cpp \
 	$(SRC)/Hardware/CPU.cpp
@@ -80,6 +79,7 @@ TEST_NAMES = \
 	TestInputTransformMode \
 	TestOverwritingRingBuffer \
 	TestDateTime TestISO8601 TestRoughTime TestRoughSpeed TestWrapClock \
+	TestPosixTimeZone \
 	TestPolylineDecoder \
 	TestTransponderCode \
 	TestMath \
@@ -123,6 +123,7 @@ TEST_NAMES = \
 	TestFileMetadataFormatter \
 	TestIGCFilenameFormatter \
 	TestNMEAFormatter \
+	TestNMEAChecksum \
 	TestGDL90 \
 	TestGDL90Driver \
 	TestLXNToIGC \
@@ -177,6 +178,12 @@ TEST_CRC16_SOURCES = \
 	$(TEST_SRC_DIR)/tap.c \
 	$(TEST_SRC_DIR)/TestCRC16.cpp
 $(eval $(call link-program,TestCRC16,TEST_CRC16))
+
+TEST_NMEA_CHECKSUM_SOURCES = \
+	$(SRC)/NMEA/Checksum.cpp \
+	$(TEST_SRC_DIR)/tap.c \
+	$(TEST_SRC_DIR)/TestNMEAChecksum.cpp
+$(eval $(call link-program,TestNMEAChecksum,TEST_NMEA_CHECKSUM))
 
 TEST_CRC8_SOURCES = \
 	$(TEST_SRC_DIR)/tap.c \
@@ -396,6 +403,12 @@ TEST_ROUGH_TIME_SOURCES = \
 	$(TEST_SRC_DIR)/TestRoughTime.cpp
 TEST_ROUGH_TIME_DEPENDS = MATH TIME
 $(eval $(call link-program,TestRoughTime,TEST_ROUGH_TIME))
+
+TEST_POSIX_TIME_ZONE_SOURCES = \
+	$(TEST_SRC_DIR)/tap.c \
+	$(TEST_SRC_DIR)/TestPosixTimeZone.cpp
+TEST_POSIX_TIME_ZONE_DEPENDS = MATH TIME
+$(eval $(call link-program,TestPosixTimeZone,TEST_POSIX_TIME_ZONE))
 
 TEST_ROUGH_SPEED_SOURCES = \
 	$(TEST_SRC_DIR)/tap.c \

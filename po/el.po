@@ -4490,6 +4490,12 @@ msgstr "Αναφορά αρχικού ύψ."
 msgid "Reference used for start max height rule."
 msgstr "Αναφέρεται για την αρχική περιοχή ωρολόγιας μέγιστης."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Μέγιστη ωρολόγια βάθους"
 
@@ -7517,6 +7523,9 @@ msgstr "Συμπύκνωση"
 
 msgid "no QNH"
 msgstr "όχι QNH"
+
+msgid "no wind"
+msgstr "χωρίς άνεμο"
 
 msgid "Not flying"
 msgstr "Χωρίς περιστροφή (κύκλωση)"

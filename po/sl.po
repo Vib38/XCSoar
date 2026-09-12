@@ -4432,6 +4432,12 @@ msgstr "Referenca za višino pri začetku"
 msgid "Reference used for start max height rule."
 msgstr "Odvzeto začetno maksimalno višino"
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Končna minimalna višina"
 
@@ -7419,6 +7425,9 @@ msgstr "Simulacija"
 
 msgid "no QNH"
 msgstr "brez QNH"
+
+msgid "no wind"
+msgstr "brez vetra"
 
 msgid "Not flying"
 msgstr "Ne krožiš"

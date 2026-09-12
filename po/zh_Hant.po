@@ -4279,6 +4279,12 @@ msgstr "開始參考高度。"
 msgid "Reference used for start max height rule."
 msgstr "參考用於開始的最大高度規則。"
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "最終滑翔最小高度"
 
@@ -7159,6 +7165,9 @@ msgstr "模擬"
 
 msgid "no QNH"
 msgstr "無絕對高度"
+
+msgid "no wind"
+msgstr "無風"
 
 msgid "Not flying"
 msgstr "不盤轉"

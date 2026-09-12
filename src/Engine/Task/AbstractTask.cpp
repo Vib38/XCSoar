@@ -8,6 +8,8 @@
 #include "GlideSolvers/GlidePolar.hpp"
 #include "Task/TaskBehaviour.hpp"
 
+#include <cmath>
+
 AbstractTask::AbstractTask(TaskType _type,
                            const TaskBehaviour &tb) noexcept
   :TaskInterface(_type),
@@ -118,7 +120,7 @@ AbstractTask::UpdateStatsDistances(const GeoPoint &location,
 
   const TaskPoint *active = GetActiveTaskPoint();
   if (active != NULL) {
-    stats.current_leg.location_remaining = active->GetLocationRemaining();
+    stats.current_leg.location_remaining = active->GetLocationNavigation();
     stats.current_leg.vector_remaining = active->GetVectorRemaining(location);
     stats.current_leg.next_leg_vector = active->GetNextLegVector();
   } else {
@@ -136,7 +138,7 @@ AbstractTask::UpdateStatsDistances(const GeoPoint &location,
                        &stats.distance_min, &stats.distance_max);
 
   stats.total.planned.SetDistance(ScanDistancePlanned());
-  stats.total.travelled.SetDistance(ScanDistanceTravelled());
+  stats.total.travelled.SetDistance(ScanDistanceTravelled(location));
 
   if (IsScored()) {
     if (!stats.start.HasStarted())
@@ -203,8 +205,18 @@ AbstractTask::UpdateGlideSolutions(const AircraftState &state,
                          stats.current_leg.solution_remaining);
 
   Copy(stats.current_leg.remaining, stats.current_leg.solution_remaining);
-  Copy(stats.current_leg.travelled, stats.current_leg.solution_travelled);
   Copy(stats.current_leg.planned, stats.current_leg.solution_planned);
+
+  /* Same formula as total travelled: planned minus remaining.
+     Speed Task Leg used to copy the MacCready travelled solution,
+     which can be NO_SOLUTION after a valid start. */
+  if (stats.current_leg.planned.IsDefined() &&
+      stats.current_leg.remaining.IsDefined())
+    stats.current_leg.travelled.SetDistance(
+      std::fdim(stats.current_leg.planned.GetDistance(),
+                stats.current_leg.remaining.GetDistance()));
+  else
+    stats.current_leg.travelled.Reset();
 
   stats.total.gradient = ::AngleToGradient(CalcGradient(state));
   stats.current_leg.gradient = ::AngleToGradient(CalcLegGradient(state));

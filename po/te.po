@@ -4321,6 +4321,12 @@ msgstr "ప్రారంభ ఊరు ఉత్తరం"
 msgid "Reference used for start max height rule."
 msgstr "ప్రారంభ మేగిన ఉత్తమ ఊరు నిలిచడానికి ఉపయోగించాలనున్న ఉత్తరం"
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "అవధి మార్గ నిలిచడం"
 
@@ -7254,6 +7260,9 @@ msgstr "సిములెటర్"
 
 msgid "no QNH"
 msgstr "నిష్పత్తి కోడ్ (QNH)"
+
+msgid "no wind"
+msgstr ""
 
 msgid "Not flying"
 msgstr "ప్రాచీనమైన గతి"

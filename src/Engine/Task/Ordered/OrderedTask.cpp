@@ -418,8 +418,16 @@ OrderedTask::ScanDistanceRemaining(const GeoPoint &location) noexcept
 }
 
 double
-OrderedTask::ScanDistanceTravelled() noexcept
+OrderedTask::ScanDistanceTravelled(const GeoPoint &location) noexcept
 {
+  /* The travelled glide solver only uses start through the active
+     point; future legs do not need a travelled vector. */
+  if (!task_points.empty()) {
+    const unsigned last = std::min(active_task_point, TaskSize() - 1);
+    for (unsigned i = 0; i <= last; ++i)
+      task_points[i]->UpdateVectorTravelled(location);
+  }
+
   return stats.total.planned.GetDistance() - stats.total.remaining.GetDistance();
 }
 
@@ -461,6 +469,12 @@ OrderedTask::CheckTransitions(const AircraftState &state,
 
   if (!n_task)
     return false;
+
+  if (active_task_point == 0)
+    taskpoint_start->UpdateNearestPoint(state.location, task_projection);
+  else if (taskpoint_finish != nullptr &&
+           (int)active_task_point == n_task - 1)
+    taskpoint_finish->UpdateNearestPoint(state.location, task_projection);
 
   FlatBoundingBox bb_last(task_projection.ProjectInteger(state_last.location),
                           1);

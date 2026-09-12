@@ -4406,6 +4406,12 @@ msgstr "Chiều cao tham chiếu khởi động"
 msgid "Reference used for start max height rule."
 msgstr "Tham chiếu được sử dụng cho quy tắc chiều cao tối đa khởi động."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Chiều cao tối thiểu hoàn thành"
 
@@ -7403,6 +7409,9 @@ msgstr "Simulater"
 
 msgid "no QNH"
 msgstr "Không có QNH"
+
+msgid "no wind"
+msgstr "Không có gió"
 
 msgid "Not flying"
 msgstr "Không bay"

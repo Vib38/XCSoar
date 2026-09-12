@@ -4421,6 +4421,12 @@ msgstr "Aloituskorkeustasainen viite"
 msgid "Reference used for start max height rule."
 msgstr "Korkeustasainen sääntö aloitusmaxiimikorkeudelle."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Loppuminimi korkeus"
 
@@ -7408,6 +7414,9 @@ msgstr "Simulaattori"
 
 msgid "no QNH"
 msgstr "QNH virhe"
+
+msgid "no wind"
+msgstr "ei tuulta"
 
 msgid "Not flying"
 msgstr "Ei kaarrossa"

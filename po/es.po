@@ -4489,6 +4489,12 @@ msgstr "Ref. de alt. de Salida"
 msgid "Reference used for start max height rule."
 msgstr "Referencia utilizada para la regla de altura máxima de salida."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Altura min. de meta"
 
@@ -7519,6 +7525,9 @@ msgstr "Simulador"
 
 msgid "no QNH"
 msgstr "Sin QNH"
+
+msgid "no wind"
+msgstr "Sin viento"
 
 msgid "Not flying"
 msgstr "No está volando"
