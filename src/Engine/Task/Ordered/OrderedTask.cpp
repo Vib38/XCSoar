@@ -418,8 +418,16 @@ OrderedTask::ScanDistanceRemaining(const GeoPoint &location) noexcept
 }
 
 double
-OrderedTask::ScanDistanceTravelled() noexcept
+OrderedTask::ScanDistanceTravelled(const GeoPoint &location) noexcept
 {
+  /* The travelled glide solver only uses start through the active
+     point; future legs do not need a travelled vector. */
+  if (!task_points.empty()) {
+    const unsigned last = std::min(active_task_point, TaskSize() - 1);
+    for (unsigned i = 0; i <= last; ++i)
+      task_points[i]->UpdateVectorTravelled(location);
+  }
+
   return stats.total.planned.GetDistance() - stats.total.remaining.GetDistance();
 }
 
@@ -441,6 +449,34 @@ OrderedTask::GetLastIntermediateAchieved() const noexcept
     if (!task_points[i]->HasEntered())
       return i - 1;
   return TaskSize() - 2;
+}
+
+// NAVIGATION
+
+inline void
+OrderedTask::UpdateNearestPoint(const GeoPoint &location) noexcept
+{
+  if (!location.IsValid())
+    return;
+
+  if (active_task_point == 0) {
+    if (taskpoint_start != nullptr)
+      taskpoint_start->UpdateNearestPoint(location, task_projection);
+  } else if (taskpoint_finish != nullptr &&
+             active_task_point + 1 == task_points.size())
+    taskpoint_finish->UpdateNearestPoint(location, task_projection);
+}
+
+bool
+OrderedTask::Update(const AircraftState &state,
+                    const AircraftState &state_last,
+                    const GlidePolar &glide_polar) noexcept
+{
+  /* before AbstractTask::Update(), so the distances and the glide
+     solutions refer to the point of this update */
+  UpdateNearestPoint(state.location);
+
+  return AbstractTask::Update(state, state_last, glide_polar);
 }
 
 // TRANSITIONS

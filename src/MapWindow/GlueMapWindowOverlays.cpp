@@ -19,13 +19,53 @@
 #include "util/Macros.hpp"
 #include "util/StringAPI.hxx"
 #include "Look/GestureLook.hpp"
+#include "Renderer/GestureRenderer.hpp"
 #include "Input/InputEvents.hpp"
 #include "Renderer/MapScaleRenderer.hpp"
 #include "Components.hpp"
 #include "BackendComponents.hpp"
 #include "Replay/Replay.hpp"
+#include "ui/canvas/Pen.hpp"
+#include "ui/canvas/Brush.hpp"
+
+#ifdef ENABLE_OPENGL
+#include "Asset.hpp"
+#include "Hardware/CPU.hpp"
+#include "ui/canvas/opengl/Scope.hpp"
+#endif
 
 #include <algorithm> // for std::clamp()
+
+#if DEBUG_ALL_MAP_OVERLAYS
+#include "Engine/Task/Stats/ElementStat.hpp"
+#include "Engine/GlideSolvers/GlideResult.hpp"
+#include "NMEA/Derived.hpp"
+#include "NMEA/MoreData.hpp"
+
+/*
+ * Feeds the bar renderers synthetic data so every overlay is on screen
+ * at once and each bar reaches its full extent in both directions.
+ */
+[[gnu::pure]]
+static DerivedInfo
+DebugFinalGlideData(DerivedInfo calculated) noexcept
+{
+  /* The renderer bails out without a valid task.  ±468 m drives the
+     two bars to opposite ends of the range, so both clipping arrows
+     show; mc0 must be valid, or only the upward bar is drawn. */
+  ElementStat &total = calculated.task_stats.total;
+
+  calculated.task_stats.task_valid = true;
+  total.solution_remaining.validity = GlideResult::Validity::OK;
+  total.solution_remaining.altitude_difference = 468;
+  total.solution_remaining.pure_glide_altitude_difference = 468;
+  total.solution_mc0.validity = GlideResult::Validity::OK;
+  total.solution_mc0.altitude_difference = -468;
+  total.solution_mc0.pure_glide_altitude_difference = -468;
+
+  return calculated;
+}
+#endif
 
 void
 GlueMapWindow::DrawGesture(Canvas &canvas) const noexcept
@@ -34,18 +74,150 @@ GlueMapWindow::DrawGesture(Canvas &canvas) const noexcept
     return;
 
   const char *gesture = gestures.GetGesture();
-  if (gesture != nullptr && !InputEvents::IsGesture(gesture))
-    canvas.Select(gesture_look.invalid_pen);
-  else
-    canvas.Select(gesture_look.pen);
+  const bool valid = gesture == nullptr || InputEvents::IsGesture(gesture);
 
-  canvas.SelectHollowBrush();
+  GestureRenderer::Draw(canvas, gesture_look, gestures.GetPoints(), valid);
 
-  const auto &points = gestures.GetPoints();
-  auto it = points.begin();
-  auto it_last = it++;
-  for (auto it_end = points.end(); it != it_end; it_last = it++)
-    canvas.DrawLinePiece(*it_last, *it);
+  /* name the action which lifting the finger now would trigger */
+  const char *label = gesture != nullptr
+    ? InputEvents::GetGestureLabel(gesture)
+    : nullptr;
+  if (label == nullptr)
+    return;
+
+  canvas.Select(*look.overlay.overlay_font);
+
+  const PixelRect rc = GetClientRect();
+
+  TextInBoxMode mode;
+  mode.shape = LabelShape::PILL;
+  mode.align = TextInBoxMode::Alignment::CENTER;
+  mode.move_in_view = true;
+
+  TextInBox(canvas, label, {rc.GetCenter().x, rc.top + Layout::Scale(12)},
+            mode, rc);
+}
+
+/**
+ * How long the page indicator is visible after a page switch,
+ * including #PAGE_INDICATOR_FADE_DURATION.
+ */
+static constexpr std::chrono::milliseconds PAGE_INDICATOR_DURATION{2000};
+
+/**
+ * How long the page indicator takes to fade out.
+ */
+static constexpr std::chrono::milliseconds PAGE_INDICATOR_FADE_DURATION{300};
+
+/**
+ * Does the page indicator fade out, or does it just disappear?  Each
+ * step of the fade repaints the map window, which a slow CPU would
+ * only stutter through, and e-paper would only show ghosting.
+ */
+[[gnu::pure]]
+static bool
+PageIndicatorFades() noexcept
+{
+#ifdef ENABLE_OPENGL
+  return !HasEPaper() && !IsSlowCPU();
+#else
+  return false;
+#endif
+}
+
+void
+GlueMapWindow::DrawPageIndicator(Canvas &canvas) const noexcept
+{
+  const unsigned n_pages = page_indicator_count;
+  const unsigned current = page_indicator_index;
+  if (n_pages < 2 || current >= n_pages)
+    return;
+
+  const auto remaining = PAGE_INDICATOR_DURATION -
+    (std::chrono::steady_clock::now() - page_indicator_time);
+  if (remaining <= remaining.zero())
+    return;
+
+  uint8_t opacity = 0xff;
+  if (PageIndicatorFades() && remaining < PAGE_INDICATOR_FADE_DURATION)
+    opacity = uint8_t(0xff * (std::chrono::duration<double>(remaining) /
+                              PAGE_INDICATOR_FADE_DURATION));
+
+  const Color color = ColorWithAlpha(COLOR_BLACK, opacity);
+
+  /* dots of about 2.5 mm, 1.8 mm apart */
+  const unsigned dot = Layout::VptScale(7);
+  const unsigned gap = Layout::VptScale(5);
+  const unsigned height = dot + 2 * Layout::VptScale(5);
+
+  /* the round ends of the pill are half its height wide */
+  const unsigned width = n_pages * dot + (n_pages - 1) * gap + height;
+
+  /* bottom centre, as far from the bottom as the gesture label is from
+     the top (see DrawGesture()); the map scale is on the left, the
+     flight mode icon on the right */
+  const PixelRect rc = GetClientRect();
+  PixelRect pill;
+  pill.left = rc.GetCenter().x - int(width / 2);
+  pill.right = pill.left + int(width);
+  pill.bottom = rc.bottom - int(bottom_margin) -
+    (Layout::Scale(12) - int(Layout::GetTextPadding()));
+  pill.top = pill.bottom - int(height);
+
+  DrawPill(canvas, pill, opacity);
+
+#ifdef ENABLE_OPENGL
+  const ScopeAlphaBlend alpha_blend;
+#endif
+
+  /* the current page is a filled dot, the others are rings: the shape
+     tells them apart, not the colour, which works on e-paper, too */
+  const unsigned pen_width = Layout::ScaleFinePenWidth(1);
+  canvas.Select(Pen(pen_width, color));
+  const Brush brush(color);
+
+  const unsigned radius = (dot - pen_width) / 2;
+  PixelPoint center{pill.left + int(height / 2 + dot / 2),
+                    pill.GetCenter().y};
+
+  for (unsigned i = 0; i < n_pages; ++i) {
+    if (i == current)
+      canvas.Select(brush);
+    else
+      canvas.SelectHollowBrush();
+
+    canvas.DrawCircle(center, radius);
+    center.x += int(dot + gap);
+  }
+}
+
+void
+GlueMapWindow::OnPageIndicatorTimer() noexcept
+{
+  const auto remaining = PAGE_INDICATOR_DURATION -
+    (std::chrono::steady_clock::now() - page_indicator_time);
+
+  if (remaining <= remaining.zero()) {
+    /* remove the page indicator */
+    PaintWindow::Invalidate();
+    return;
+  }
+
+  using Duration = std::chrono::steady_clock::duration;
+  const Duration fade = PageIndicatorFades()
+    ? Duration{PAGE_INDICATOR_FADE_DURATION}
+    : Duration::zero();
+
+  if (remaining > fade) {
+    /* keep it until it starts fading out (or disappears) */
+    page_indicator_timer.Schedule(remaining - fade);
+    return;
+  }
+
+  /* one step of the fade */
+  PaintWindow::Invalidate();
+  page_indicator_timer.Schedule(std::min<Duration>(
+    remaining, std::chrono::milliseconds{40}));
 }
 
 void
@@ -176,6 +348,9 @@ GlueMapWindow::DrawGPSStatus(Canvas &canvas, const PixelRect &rc,
   } else if (!info.location_available) {
     icon = &look.waiting_for_fix_icon;
     txt = _("GPS waiting for fix");
+  } else if (DEBUG_ALL_MAP_OVERLAYS) {
+    icon = &look.waiting_for_fix_icon;
+    txt = "GPS status";
   } else
     // early exit
     return;
@@ -234,27 +409,30 @@ GlueMapWindow::DrawFlightMode(Canvas &canvas,
                        rc.bottom - bottom_margin - bmp->GetSize().height - Layout::Scale(4)));
 
   // draw flarm status
-  if (!GetMapSettings().show_flarm_alarm_level)
+  if (!GetMapSettings().show_flarm_alarm_level && !DEBUG_ALL_MAP_OVERLAYS)
     // Don't show indicator when the gauge is indicating the traffic anyway
     return;
 
   const FlarmStatus &flarm = Basic().flarm.status;
-  if (!flarm.available)
-    return;
+  if (!flarm.available) {
+    if (!DEBUG_ALL_MAP_OVERLAYS)
+      return;
 
-  switch (flarm.alarm_level) {
-  case FlarmTraffic::AlarmType::NONE:
     bmp = &look.traffic_safe_icon;
-    break;
-  case FlarmTraffic::AlarmType::LOW:
-  case FlarmTraffic::AlarmType::INFO_ALERT:
-    bmp = &look.traffic_warning_icon;
-    break;
-  case FlarmTraffic::AlarmType::IMPORTANT:
-  case FlarmTraffic::AlarmType::URGENT:
-    bmp = &look.traffic_alarm_icon;
-    break;
-  };
+  } else
+    switch (flarm.alarm_level) {
+    case FlarmTraffic::AlarmType::NONE:
+      bmp = &look.traffic_safe_icon;
+      break;
+    case FlarmTraffic::AlarmType::LOW:
+    case FlarmTraffic::AlarmType::INFO_ALERT:
+      bmp = &look.traffic_warning_icon;
+      break;
+    case FlarmTraffic::AlarmType::IMPORTANT:
+    case FlarmTraffic::AlarmType::URGENT:
+      bmp = &look.traffic_alarm_icon;
+      break;
+    };
 
   offset += bmp->GetSize().width + Layout::Scale(6);
 
@@ -267,6 +445,14 @@ void
 GlueMapWindow::DrawFinalGlide(Canvas &canvas,
                               const PixelRect &rc) const noexcept
 {
+  const GlideSettings &glide_settings = GetComputerSettings().task.glide;
+
+#if DEBUG_ALL_MAP_OVERLAYS
+  final_glide_bar_renderer.Draw(canvas, rc,
+                                DebugFinalGlideData(Calculated()),
+                                glide_settings, true);
+  return;
+#else
 
   if (GetMapSettings().final_glide_bar_display_mode==FinalGlideBarDisplayMode::OFF)
     return;
@@ -276,7 +462,6 @@ GlueMapWindow::DrawFinalGlide(Canvas &canvas,
     const ElementStat &total = task_stats.total;
     const GlideResult &solution = total.solution_remaining;
     const GlideResult &solution_mc0 = total.solution_mc0;
-    const GlideSettings &glide_settings= GetComputerSettings().task.glide;
 
     if (!task_stats.task_valid || !solution.IsOk() || !solution_mc0.IsDefined())
       return;
@@ -287,19 +472,33 @@ GlueMapWindow::DrawFinalGlide(Canvas &canvas,
   }
 
   final_glide_bar_renderer.Draw(canvas, rc, Calculated(),
-                                GetComputerSettings().task.glide,
+                                glide_settings,
                                 GetMapSettings().final_glide_bar_mc0_enabled);
+#endif
 }
 
 void
 GlueMapWindow::DrawVario(Canvas &canvas, const PixelRect &rc) const noexcept
 {
+  const GlidePolar &polar = GetComputerSettings().polar.glide_polar_task;
+
+#if DEBUG_ALL_MAP_OVERLAYS
+  /* gross and average vario at opposite ends of the ±5 m/s range, so
+     both bars reach their full extent in both directions */
+  MoreData basic = Basic();
+  DerivedInfo calculated = Calculated();
+  basic.brutto_vario = basic.filtered_brutto_vario = 5;
+  calculated.average = -5;
+
+  vario_bar_renderer.Draw(canvas, rc, basic, calculated, polar, true);
+#else
   if (!GetMapSettings().vario_bar_enabled)
    return;
 
   vario_bar_renderer.Draw(canvas, rc, Basic(), Calculated(),
-                                GetComputerSettings().polar.glide_polar_task,
+                                polar,
                                 true); //NOTE: AVG enabled for now, make it configurable ;
+#endif
 }
 
 void
@@ -406,6 +605,9 @@ GlueMapWindow::DrawMapScale(Canvas &canvas, const PixelRect &rc,
     buffer.AppendFormat(
         "BALLAST %d LITERS ",
         (int)GetComputerSettings().polar.glide_polar_task.GetBallastLitres());
+
+  if (buffer.empty() && DEBUG_ALL_MAP_OVERLAYS)
+    buffer = "Map title";
 
   if (!buffer.empty()) {
 
@@ -520,14 +722,17 @@ void
 GlueMapWindow::DrawStallRatio(Canvas &canvas,
                               const PixelRect &rc) const noexcept
 {
-  if (Basic().stall_ratio_available) {
-    // JMW experimental, display stall sensor
-    auto s = std::clamp(Basic().stall_ratio, 0., 1.);
-    int m = rc.GetHeight() * s * s;
+  // JMW experimental, display stall sensor
+  if (!Basic().stall_ratio_available && !DEBUG_ALL_MAP_OVERLAYS)
+    return;
 
-    const auto p = rc.GetBottomRight();
+  const auto s = DEBUG_ALL_MAP_OVERLAYS
+    ? 0.5
+    : std::clamp(Basic().stall_ratio, 0., 1.);
+  const int m = rc.GetHeight() * s * s;
 
-    canvas.SelectBlackPen();
-    canvas.DrawLine(p.At(-1, -m), p.At(-11, -m));
-  }
+  const auto p = rc.GetBottomRight();
+
+  canvas.SelectBlackPen();
+  canvas.DrawLine(p.At(-1, -m), p.At(-11, -m));
 }

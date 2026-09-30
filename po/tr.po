@@ -1090,10 +1090,6 @@ msgstr "BLE Portu"
 msgid "Bluetooth server"
 msgstr "Bluetooth sunucu"
 
-msgid "GPS Intermediate Driver"
-msgstr "GPS Araslık Sürücüsü"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "İçerikli GPS & Sensörler"
 
@@ -4424,6 +4420,12 @@ msgstr "Başlangıç yükseklik referansı"
 msgid "Reference used for start max height rule."
 msgstr "Başlangıç maksimum yükseklik kuralı için kullanılan referans."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Bitiş minimum yükseklik"
 
@@ -7428,6 +7430,9 @@ msgstr "Simgesi"
 
 msgid "no QNH"
 msgstr "QNH Yok"
+
+msgid "no wind"
+msgstr "Rüzgar Yok"
 
 msgid "Not flying"
 msgstr "Yükselmeyen"
@@ -11120,3 +11125,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "El ile"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

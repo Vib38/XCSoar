@@ -1213,6 +1213,18 @@ msgstr ""
 msgid "Quit program?"
 msgstr ""
 
+msgid "Restart"
+msgstr ""
+
+msgid "Power off"
+msgstr ""
+
+msgid "Restart the device?"
+msgstr ""
+
+msgid "Power off the device?"
+msgstr ""
+
 #, no-c-format
 msgid "European"
 msgstr ""
@@ -1348,10 +1360,6 @@ msgstr ""
 msgid "Bluetooth server"
 msgstr ""
 
-msgid "GPS Intermediate Driver"
-msgstr ""
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr ""
 
@@ -5555,6 +5563,12 @@ msgstr ""
 msgid "Reference used for start max height rule."
 msgstr ""
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr ""
 
@@ -9031,6 +9045,9 @@ msgstr ""
 msgid "no QNH"
 msgstr ""
 
+msgid "no wind"
+msgstr ""
+
 msgid "Not flying"
 msgstr ""
 
@@ -9800,4 +9817,19 @@ msgstr ""
 msgid ""
 "Forecast\n"
 "Controls"
+msgstr ""
+
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
 msgstr ""

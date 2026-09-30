@@ -1097,10 +1097,6 @@ msgstr "port BLE"
 msgid "Bluetooth server"
 msgstr "server Bluetooth"
 
-msgid "GPS Intermediate Driver"
-msgstr "GPS srednji vodič"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Integrirani GPS i senzori"
 
@@ -4422,6 +4418,12 @@ msgstr "Referenca za početnu visinu"
 msgid "Reference used for start max height rule."
 msgstr "Koristena referenca za pravilo maksimalne visine početka."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Minimalna visina završetka"
 
@@ -7434,6 +7436,9 @@ msgstr "Simulirac"
 
 msgid "no QNH"
 msgstr "bez QNH"
+
+msgid "no wind"
+msgstr "bez vjetra"
 
 msgid "Not flying"
 msgstr "Ne ljetim"
@@ -11112,3 +11117,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Ručno"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

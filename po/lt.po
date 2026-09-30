@@ -1101,10 +1101,6 @@ msgstr "BLE portas"
 msgid "Bluetooth server"
 msgstr "Bluetooth serveris"
 
-msgid "GPS Intermediate Driver"
-msgstr "GPS vidinis kiekinatorius"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Integruotas GPS ir sensoriai"
 
@@ -4443,6 +4439,12 @@ msgstr "Pradžios lygis atsižvelgiant į"
 msgid "Reference used for start max height rule."
 msgstr "Naudoti pradžios maksimalaus lygio taisyklėse"
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Baigimo minimalus lygis"
 
@@ -7451,6 +7453,9 @@ msgstr "Sąrašas"
 
 msgid "no QNH"
 msgstr "Nėra QNH"
+
+msgid "no wind"
+msgstr "Nėra vėjo"
 
 msgid "Not flying"
 msgstr "Neveikia"
@@ -11144,3 +11149,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Rankinis"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

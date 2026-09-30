@@ -1104,10 +1104,6 @@ msgstr "Vienti"
 msgid "Bluetooth server"
 msgstr "Bluetooth-palvelin"
 
-msgid "GPS Intermediate Driver"
-msgstr "GPS-mediaanjohtaja"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Sisäänrakennettu GPS ja anturit"
 
@@ -4421,6 +4417,12 @@ msgstr "Aloituskorkeustasainen viite"
 msgid "Reference used for start max height rule."
 msgstr "Korkeustasainen sääntö aloitusmaxiimikorkeudelle."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Loppuminimi korkeus"
 
@@ -7408,6 +7410,9 @@ msgstr "Simulaattori"
 
 msgid "no QNH"
 msgstr "QNH virhe"
+
+msgid "no wind"
+msgstr "ei tuulta"
 
 msgid "Not flying"
 msgstr "Ei kaarrossa"
@@ -11097,3 +11102,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Manuaalinen"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

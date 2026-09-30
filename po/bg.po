@@ -1113,10 +1113,6 @@ msgstr "BLE порт"
 msgid "Bluetooth server"
 msgstr "Bluetooth сървър"
 
-msgid "GPS Intermediate Driver"
-msgstr "Междинен драйвер за ГПС"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Вграден ГПС и други датчици"
 
@@ -4460,6 +4456,12 @@ msgstr "Стартовата височина е спрямо"
 msgid "Reference used for start max height rule."
 msgstr "Височина използвана като правило за макс. стартова стойност."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Мин. финална височина"
 
@@ -7473,6 +7475,9 @@ msgstr "Симулатор"
 
 msgid "no QNH"
 msgstr "Няма QNH"
+
+msgid "no wind"
+msgstr "Няма вятър"
 
 msgid "Not flying"
 msgstr "Не лети"
@@ -11214,3 +11219,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Ръчно"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

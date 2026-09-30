@@ -1105,10 +1105,6 @@ msgstr "BLE-port"
 msgid "Bluetooth server"
 msgstr "Bluetooth-server"
 
-msgid "GPS Intermediate Driver"
-msgstr "GPS-midtdriver"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Integreerede GPS & sensorer"
 
@@ -4416,6 +4412,12 @@ msgstr "Starthøjhedsindeks"
 msgid "Reference used for start max height rule."
 msgstr "Indeks brugt for startmaksimumshøjde-reglen."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Slutminimumshøjde"
 
@@ -7461,6 +7463,9 @@ msgstr "Simulering"
 
 msgid "no QNH"
 msgstr "ingen QNH"
+
+msgid "no wind"
+msgstr "ingen vind"
 
 msgid "Not flying"
 msgstr "Kurver ikke"
@@ -11131,3 +11136,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Manuelt"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

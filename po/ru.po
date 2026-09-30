@@ -1109,10 +1109,6 @@ msgstr "TCP порт"
 msgid "Bluetooth server"
 msgstr "Сервер блютуз"
 
-msgid "GPS Intermediate Driver"
-msgstr "GPS промежуточный драйвер"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Встроенный GPS и другие сенсоры"
 
@@ -4453,6 +4449,12 @@ msgstr "Привязка высоты старта"
 msgid "Reference used for start max height rule."
 msgstr "Привязка, которая используется в правилах макс. высоты старта."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Мин. высота на финише"
 
@@ -7468,6 +7470,9 @@ msgstr "Симулятор"
 
 msgid "no QNH"
 msgstr "нет QNH"
+
+msgid "no wind"
+msgstr "нет ветра"
 
 msgid "Not flying"
 msgstr "Не в спирали"
@@ -11189,3 +11194,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Вручную"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

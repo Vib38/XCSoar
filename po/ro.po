@@ -1114,10 +1114,6 @@ msgstr "Portul BLE"
 msgid "Bluetooth server"
 msgstr "Serviciu Bluetooth"
 
-msgid "GPS Intermediate Driver"
-msgstr "Driver Intermediar GPS"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "GPS integrat și senzori"
 
@@ -4465,6 +4461,12 @@ msgstr "Înalțime de referință la început"
 msgid "Reference used for start max height rule."
 msgstr "Referința folosită pentru regulă maximă de înălțime la început."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Înalțime minima la finalizare"
 
@@ -7450,6 +7452,9 @@ msgstr "Simulare"
 
 msgid "no QNH"
 msgstr "fără QNH"
+
+msgid "no wind"
+msgstr "fără vânt"
 
 msgid "Not flying"
 msgstr "Nu spiralezi"
@@ -11157,3 +11162,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Manual"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""

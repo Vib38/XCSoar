@@ -1117,10 +1117,6 @@ msgstr "Port TE"
 msgid "Bluetooth server"
 msgstr "Serwer Bluetooth"
 
-msgid "GPS Intermediate Driver"
-msgstr "Pośredni sterownik GPS"
-
-#, no-c-format
 msgid "Built-in GPS & sensors"
 msgstr "Wbudowany GPS i czujniki"
 
@@ -4447,6 +4443,12 @@ msgstr "Poziom odn. odejścia"
 msgid "Reference used for start max height rule."
 msgstr "Poz.odn. użyto do wyznaczenia maks.wys.startu."
 
+msgid "Navigate to nearest point"
+msgstr ""
+
+msgid "Navigate to the nearest point of the start and finish zones."
+msgstr ""
+
 msgid "Finish min. height"
 msgstr "Min. wysok. na mecie"
 
@@ -7480,6 +7482,9 @@ msgstr "Symul."
 
 msgid "no QNH"
 msgstr "Brak QNH"
+
+msgid "no wind"
+msgstr "Brak wiatru"
 
 msgid "Not flying"
 msgstr "Nie krążysz"
@@ -11203,3 +11208,17 @@ msgctxt "Setting"
 msgid "Manual"
 msgstr "Ręcznie"
 
+#, no-c-format
+msgid "Blood Oxygen"
+msgstr ""
+
+#, no-c-format
+msgid "SpO2"
+msgstr ""
+
+#, no-c-format
+msgid "Blood oxygen saturation in percent, from a Bluetooth pulse oximeter."
+msgstr ""
+
+msgid "Recently used waypoints"
+msgstr ""
